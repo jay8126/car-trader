@@ -1,8 +1,13 @@
-<script setup></script>
+<script setup>
+useHead({
+	title: 'Cartrader',
+	description: 'Find the best car rentals in your city',
+	image: '/car-hero.jpg',
+});
+</script>
 
 <template>
 	<div>
-		<NavBar />
 		<CarHero />
 	</div>
 </template>
