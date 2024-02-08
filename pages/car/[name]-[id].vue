@@ -1,25 +1,28 @@
 <script setup>
-const route = useRoute();
-const { cars } = useCars();
-const { toTitleCase } = useUtilities();
+definePageMeta({
+	layout: 'custom',
+	validate({ params }) {
+		const { cars } = useCars();
+		const car = cars.find((car) => car.id === parseInt(params.id));
+		if (!car.value) {
+			throw createError({
+				statusCode: 404,
+				message: `Car with ID of ${params.id} does not exist`,
+			});
+		}
+	},
+});
 
 useHead({
 	title: toTitleCase(route.params.name),
 });
 
+const route = useRoute();
+const { cars } = useCars();
+const { toTitleCase } = useUtilities();
+
 const car = computed(() => {
 	return cars.find((car) => car.id === parseInt(route.params.id));
-});
-
-if (!car.value) {
-	throw createError({
-		statusCode: 404,
-		message: `Car with id of ${route.params.id} does not exist`,
-	});
-}
-
-definePageMeta({
-	layout: 'custom',
 });
 </script>
 
